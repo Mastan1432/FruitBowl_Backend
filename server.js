@@ -9,6 +9,10 @@ const paymentRoutes = require("./routes/paymentRoutes");
 dotenv.config();
 connectDB();
 
+
+const app = express();
+
+
 app.use(
   cors({
     origin: "*", // allow all for now
@@ -17,7 +21,7 @@ app.use(
   })
 );
 
-const app = express();
+
 
 app.use(express.json());
 
