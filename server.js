@@ -11,8 +11,6 @@ connectDB();
 
 const app = express();
 
-// Middleware
-app.use(cors());
 app.use(express.json());
 
 // Routes
@@ -30,7 +28,6 @@ app.use("/api/offers", offerRoutes);
 
 app.use("/api/payments", paymentRoutes);
 
-const cors = require("cors");
 
 app.use(
   cors({
