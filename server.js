@@ -9,6 +9,14 @@ const paymentRoutes = require("./routes/paymentRoutes");
 dotenv.config();
 connectDB();
 
+app.use(
+  cors({
+    origin: "*", // allow all for now
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
+
 const app = express();
 
 app.use(express.json());
@@ -28,13 +36,6 @@ app.use("/api/offers", offerRoutes);
 
 app.use("/api/payments", paymentRoutes);
 
-
-app.use(
-  cors({
-    origin: "*", // later you can restrict
-    credentials: true,
-  })
-);
 
 app.get("/", (req, res) => {
   res.send("FruitBowl Backend Running 🍓");
