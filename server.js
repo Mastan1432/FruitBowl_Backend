@@ -40,6 +40,7 @@ app.use("/api/offers", offerRoutes);
 
 app.use("/api/payments", paymentRoutes);
 
+app.use("/api/plan", require("./routes/planRoutes"));
 
 app.get("/", (req, res) => {
   res.send("FruitBowl Backend Running 🍓");

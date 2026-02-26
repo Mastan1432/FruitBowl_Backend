@@ -17,7 +17,9 @@ const saveFruitBox = async (req, res) => {
 
 const getProfile = async (req, res) => {
    try {
-    const user = await User.findById(req.user.id).select("-password");
+    const user = await User.findById(req.user.id)
+  .select("-password")
+  .populate("subscriptionPlan");
 
     // Calculate Days Left
     const today = new Date();

@@ -44,15 +44,58 @@ router.post("/add-customer", authMiddleware, adminMiddleware, async (req, res) =
 // Get All Customers
 router.get("/", authMiddleware, adminMiddleware, async (req, res) => {
    try {
-      const customers = await User.find({ role: "CUSTOMER" }).select(
-        "-password"
-      );
+      const customers = await User.find({ role: "CUSTOMER" })
+  .populate("subscriptionPlan")
+  .select("-password");
 
       res.json(customers);
     } catch (err) {
       res.status(500).json({ message: "Error fetching customers ❌" });
     }
 });
+
+
+// Update Customer
+router.put(
+  "/update/:id",
+  authMiddleware,
+  adminMiddleware,
+  async (req, res) => {
+    try {
+      const { name, phone, subscriptionPlan, duration, startDate } = req.body;
+
+      const updatedUser = await User.findByIdAndUpdate(
+        req.params.id,
+        { name, phone, subscriptionPlan, duration, startDate },
+        { new: true }
+      ).select("-password");
+
+      res.json({
+        message: "Customer updated successfully ✅",
+        updatedUser,
+      });
+    } catch (err) {
+      res.status(500).json({ message: "Error updating customer ❌" });
+    }
+  }
+);
+
+
+// Delete Customer
+router.delete(
+  "/delete/:id",
+  authMiddleware,
+  adminMiddleware,
+  async (req, res) => {
+    try {
+      await User.findByIdAndDelete(req.params.id);
+
+      res.json({ message: "Customer deleted successfully 🗑" });
+    } catch (err) {
+      res.status(500).json({ message: "Error deleting customer ❌" });
+    }
+  }
+);
 
 
 module.exports = router;

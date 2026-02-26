@@ -22,9 +22,8 @@ const userSchema = new mongoose.Schema(
 
     // Subscription Info
     subscriptionPlan: {
-      type: String,
-      enum: ["Basic", "Standard", "Premium", "Diabetic"],
-      default: "Basic",
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Plan",
     },
 
     duration: {
